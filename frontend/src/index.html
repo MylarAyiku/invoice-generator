@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Invoice Generator</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="logo">📄 InvoiceGen</div>
+        <nav>
+            <button class="nav-btn active" onclick="showPage('create')">Create Invoice</button>
+            <button class="nav-btn" onclick="showPage('history')">Invoice History</button>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main">
+
+        <!-- Create Invoice Page -->
+        <div id="page-create" class="page active">
+            <h1>Create Invoice</h1>
+
+            <div class="form-grid">
+
+                <!-- Sender -->
+                <div class="card">
+                    <h2>Your Details</h2>
+                    <div class="field">
+                        <label>Full Name</label>
+                        <input type="text" id="sender_name" placeholder="John Doe" />
+                    </div>
+                    <div class="field">
+                        <label>Email</label>
+                        <input type="email" id="sender_email" placeholder="john@example.com" />
+                    </div>
+                    <div class="field">
+                        <label>Address</label>
+                        <textarea id="sender_address" placeholder="123 Main St, City, Country"></textarea>
+                    </div>
+                </div>
+
+                <!-- Client -->
+                <div class="card">
+                    <h2>Client Details</h2>
+                    <div class="field">
+                        <label>Client Name</label>
+                        <input type="text" id="client_name" placeholder="Acme Corp" />
+                    </div>
+                    <div class="field">
+                        <label>Client Email</label>
+                        <input type="email" id="client_email" placeholder="billing@acme.com" />
+                    </div>
+                    <div class="field">
+                        <label>Client Address</label>
+                        <textarea id="client_address" placeholder="456 Business Ave, City, Country"></textarea>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Items -->
+            <div class="card">
+                <h2>Line Items</h2>
+                <div class="items-header">
+                    <span>Description</span>
+                    <span>Qty</span>
+                    <span>Unit Price ($)</span>
+                    <span>Amount</span>
+                    <span></span>
+                </div>
+                <div id="items-list"></div>
+                <button class="btn-secondary" onclick="addItem()">+ Add Item</button>
+            </div>
+
+            <!-- Totals -->
+            <div class="card totals-card">
+                <div class="field inline">
+                    <label>Tax Rate (%)</label>
+                    <input type="number" id="tax_rate" value="0" min="0" max="100" oninput="updateTotals()" />
+                </div>
+                <div class="totals">
+                    <div class="total-row"><span>Subtotal</span><span id="subtotal">$0.00</span></div>
+                    <div class="total-row"><span>Tax</span><span id="tax_amount">$0.00</span></div>
+                    <div class="total-row grand"><span>Total</span><span id="total">$0.00</span></div>
+                </div>
+            </div>
+
+            <!-- Notes -->
+            <div class="card">
+                <h2>Notes <span class="optional">(optional)</span></h2>
+                <textarea id="notes" placeholder="Payment due within 30 days..."></textarea>
+            </div>
+
+            <button class="btn-primary" onclick="submitInvoice()">Generate Invoice</button>
+
+            <!-- Success -->
+            <div id="success-banner" class="banner hidden">
+                <p>✅ Invoice <strong id="invoice-number"></strong> created!</p>
+                <button class="btn-secondary" onclick="downloadPDF()">Download PDF</button>
+            </div>
+        </div>
+
+        <!-- History Page -->
+        <div id="page-history" class="page">
+            <h1>Invoice History</h1>
+            <div id="history-list" class="history-list"></div>
+        </div>
+
+    </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
